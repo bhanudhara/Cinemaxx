@@ -1,6 +1,7 @@
 
 
 import React, { useState } from 'react';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { AuthForm } from './components/AuthForm';
 import { MovieList } from './components/MovieList';
 import { MovieSearch } from './components/MovieSearch';
@@ -57,35 +58,37 @@ const App: React.FC = () => {
   }, [theme]);
 
   return (
-    <div>
-      <h1>Welcome, {user.email} ({user.provider})</h1>
-      <button onClick={() => { localStorage.removeItem('user'); setUser(null); }}>
-        Logout
-      </button>
-      <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} style={{ marginLeft: 8 }}>
-        Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
-      </button>
-      <Favorites
-        favorites={favorites}
-        onSelect={setSelectedMovie}
-        onRemove={handleRemoveFavorite}
-      />
-      <MovieSearch onSelect={setSelectedMovie} />
-      <div style={{ margin: '2rem 0' }}>
-        <MovieList category="popular" title="Popular Movies" />
-        <MovieList category="now_playing" title="Now Playing" />
-        <MovieList category="upcoming" title="Upcoming Movies" />
-        <MovieList category="top_rated" title="Top Rated Movies" />
-      </div>
-      {selectedMovie && (
-        <MovieDetails
-          movieId={selectedMovie.id}
-          onClose={() => setSelectedMovie(null)}
-          onToggleFavorite={handleToggleFavorite}
-          isFavorite={favorites.some((m) => m.id === selectedMovie.id)}
+    <ErrorBoundary>
+      <div>
+        <h1>Welcome, {user.email} ({user.provider})</h1>
+        <button onClick={() => { localStorage.removeItem('user'); setUser(null); }}>
+          Logout
+        </button>
+        <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} style={{ marginLeft: 8 }}>
+          Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
+        </button>
+        <Favorites
+          favorites={favorites}
+          onSelect={setSelectedMovie}
+          onRemove={handleRemoveFavorite}
         />
-      )}
-    </div>
+        <MovieSearch onSelect={setSelectedMovie} />
+        <div style={{ margin: '2rem 0' }}>
+          <MovieList category="popular" title="Popular Movies" />
+          <MovieList category="now_playing" title="Now Playing" />
+          <MovieList category="upcoming" title="Upcoming Movies" />
+          <MovieList category="top_rated" title="Top Rated Movies" />
+        </div>
+        {selectedMovie && (
+          <MovieDetails
+            movieId={selectedMovie.id}
+            onClose={() => setSelectedMovie(null)}
+            onToggleFavorite={handleToggleFavorite}
+            isFavorite={favorites.some((m) => m.id === selectedMovie.id)}
+          />
+        )}
+      </div>
+    </ErrorBoundary>
   );
 };
 
