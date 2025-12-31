@@ -45,8 +45,8 @@ export const Favorites: React.FC<FavoritesProps> = ({ favorites, onSelect, onRem
     color: '#1976d2',
     fontSize: 22,
     cursor: 'pointer',
-    height: 44,
-    width: 44,
+    height: 32,
+    width: 32,
     borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
@@ -59,19 +59,19 @@ export const Favorites: React.FC<FavoritesProps> = ({ favorites, onSelect, onRem
       <h2>Favorites</h2>
       {showArrows && (
         <>
-          <button aria-label="Scroll left" onClick={scrollLeft} style={iconBtnStyle}>
+          <span aria-label="Scroll left" onClick={scrollLeft} style={{...iconBtnStyle , left: '-16px' }}>
             <span className="material-icons" style={{ fontSize: 20 }}>chevron_left</span>
-          </button>
-          <button aria-label="Scroll right" onClick={scrollRight} style={{ ...iconBtnStyle, left: 'auto', right: 0 }}>
+          </span>
+          <span aria-label="Scroll right" onClick={scrollRight} style={{ ...iconBtnStyle, left: 'auto', right: '-16px' }}>
             <span className="material-icons" style={{ fontSize: 20 }}>chevron_right</span>
-          </button>
+          </span>
         </>
       )}
       <div
         id="style-16"
         className="hide-scroll"
         ref={scrollRef}
-        style={{ display: 'flex', overflowX: 'auto', gap: 16, scrollBehavior: 'smooth', padding: showArrows ? '0 48px' : 0 }}
+        style={{ display: 'flex', overflowX: 'auto', gap: 16, scrollBehavior: 'smooth', padding: 0 }}
       >
         {favorites.length === 0 && <div>No favorites yet.</div>}
         {favorites.map(movie => (

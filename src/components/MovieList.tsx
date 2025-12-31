@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { fetchMovies } from '../api/tmdb';
+import './MovieList.css';
 
 export type Movie = {
   id: number;
@@ -78,6 +79,7 @@ export const MovieList: React.FC<MovieListProps> = ({ category, title }) => {
   };
 
   return (
+    <>
     <div style={{ margin: '2rem 0', position: 'relative', width: '100%' }}>
       <h2>{title}</h2>
       {loading && <div>Loading...</div>}
@@ -97,7 +99,7 @@ export const MovieList: React.FC<MovieListProps> = ({ category, title }) => {
         id="style-16"
         className="hide-scroll"
         ref={scrollRef}
-        style={{ display: 'flex', overflowX: 'auto', gap: 16, scrollBehavior: 'smooth', padding: showArrows ? '0 48px' : 0 }}
+        style={{ display: 'flex', overflowX: 'auto', gap: 16, scrollBehavior: 'smooth', padding: 0 }}
       >
         {movies.map(movie => (
           <div key={movie.id} style={{ minWidth: 180, position: 'relative' }}>
@@ -106,8 +108,10 @@ export const MovieList: React.FC<MovieListProps> = ({ category, title }) => {
             <div style={{ textAlign: 'center', color: '#888' }}>{movie.release_date}</div>
             <div style={{ textAlign: 'center', color: '#1976d2' }}>⭐ {movie.vote_average}</div>
           </div>
-        ))}
-      </div>
+        )
+      )}
     </div>
+    </div>
+    </>
   );
-};
+}

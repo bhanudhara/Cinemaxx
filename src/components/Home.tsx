@@ -61,8 +61,8 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <header style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', padding: '1rem 0' }}>
-       
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 0' }}>
+        <h1>Welcome, {displayName} ({user.provider})</h1>
 
         <div style={{ position: 'relative' }}>
           <button
@@ -78,21 +78,20 @@ const Home: React.FC = () => {
 
           {profileOpen && (
             <div style={{ position: 'absolute', right: 0, top: 48, background: '#fff', border: '1px solid #ddd', borderRadius: 8, minWidth: 200, boxShadow: '0 4px 16px rgba(0,0,0,0.12)', zIndex: 10 }}>
-            
-              {/* <div style={{ padding: 12, borderBottom: '1px solid #eee' }}>
+              <div style={{ padding: 12, borderBottom: '1px solid #eee' }}>
                 <div style={{ fontWeight: 600 }}>{displayName}</div>
                 <div style={{ fontSize: 12, color: '#666' }}>{user.email}</div>
-              </div> */}
+              </div>
               <div style={{ padding: 8 }}>
                 <button
-                  style={{ width: '100%', padding: 8, border: 'none', background: 'transparent', textAlign: 'left', cursor: 'pointer', color: '#c62828' }}
+                  style={{ width: '100%', padding: 8, border: 'none', background: 'transparent', textAlign: 'left', cursor: 'pointer' }}
                   onClick={() => { setProfileOpen(false); navigate('/profile') }}
                 >
                   Profile
                 </button>
 
                 <button
-                  style={{ width: '100%', padding: 8, border: 'none', background: 'transparent', textAlign: 'left', cursor: 'pointer', color: '#c62828' }}
+                  style={{ width: '100%', padding: 8, border: 'none', background: 'transparent', textAlign: 'left', cursor: 'pointer' }}
                   onClick={() => { setTheme(theme === 'light' ? 'dark' : 'light'); setProfileOpen(false) }}
                 >
                   Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
