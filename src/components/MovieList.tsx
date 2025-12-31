@@ -81,7 +81,8 @@ export const MovieList: React.FC<MovieListProps> = ({ category, title }) => {
   return (
     <>
     <div style={{ margin: '2rem 0', position: 'relative', width: '100%' }}>
-      <h2>{title}</h2>
+              <h3 style={{marginTop: 0}}>{title}</h3>
+
       {loading && <div>Loading...</div>}
       {error && <div style={{ color: 'red' }}>{error}</div>}
       {!loading && !error && movies.length === 0 && <div>No movies found.</div>}

@@ -55,8 +55,8 @@ export const Favorites: React.FC<FavoritesProps> = ({ favorites, onSelect, onRem
   };
 
   return (
-    <div style={{ margin: '2rem 0', position: 'relative', width: '100%' }}>
-      <h2>Favorites</h2>
+    <div style={{ position: 'relative', width: '100%' }}>
+      <h3 style={{marginTop: 0}}>Favorites</h3>
       {showArrows && (
         <>
           <span aria-label="Scroll left" onClick={scrollLeft} style={{...iconBtnStyle , left: '-16px' }}>

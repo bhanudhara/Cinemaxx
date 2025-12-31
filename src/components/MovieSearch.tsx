@@ -18,15 +18,44 @@ export const MovieSearch: React.FC<{ onSelect: (movie: Movie) => void }> = ({ on
 
   return (
     <div style={{ margin: '2rem 0' }}>
-      <form onSubmit={handleSearch} style={{ display: 'flex', gap: 8 }}>
+      <form onSubmit={handleSearch} style={{ position: 'relative', display: 'flex' }}>
         <input
           type="text"
           placeholder="Search movies..."
           value={query}
           onChange={e => setQuery(e.target.value)}
-          style={{ flex: 1, padding: 8 }}
+          style={{
+            flex: 1,
+            padding: '12px 48px 12px 16px',
+            borderRadius: '24px',
+            border: '1px solid #ccc',
+            fontSize: '16px',
+            outline: 'none',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            transition: 'box-shadow 0.2s'
+          }}
         />
-        <button type="submit">Search</button>
+        <button
+          type="submit"
+          style={{
+            position: 'absolute',
+            right: '8px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '8px',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 21L16.5 16.5M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
       </form>
       {loading && <div>Searching...</div>}
       <div style={{ display: 'flex', overflowX: 'auto', gap: 16, marginTop: 16 }}>
