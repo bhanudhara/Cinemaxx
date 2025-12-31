@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { fetchMovies } from '../api/tmdb';
+import './MovieList.css';
 
 export type Movie = {
   id: number;
@@ -78,6 +79,7 @@ export const MovieList: React.FC<MovieListProps> = ({ category, title }) => {
   };
 
   return (
+    <>
     <div style={{ margin: '2rem 0', position: 'relative', width: '100%' }}>
       <h2>{title}</h2>
       {loading && <div>Loading...</div>}
@@ -106,8 +108,10 @@ export const MovieList: React.FC<MovieListProps> = ({ category, title }) => {
             <div style={{ textAlign: 'center', color: '#888' }}>{movie.release_date}</div>
             <div style={{ textAlign: 'center', color: '#1976d2' }}>⭐ {movie.vote_average}</div>
           </div>
-        ))}
-      </div>
+        )
+      )}
     </div>
+    </div>
+    </>
   );
-};
+}

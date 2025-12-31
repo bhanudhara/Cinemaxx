@@ -12,17 +12,25 @@ interface MovieDetailsProps {
 export const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, onClose, onToggleFavorite, isFavorite }) => {
   const [movie, setMovie] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
-    fetchMovies(`/movie/${movieId}`, { append_to_response: 'credits,videos' }).then(data => {
-      setMovie(data);
-      setLoading(false);
-    });
+    setError(null);
+    fetchMovies(`/movie/${movieId}`, { append_to_response: 'credits,videos' })
+      .then(data => {
+        setMovie(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message || 'Failed to load movie details.');
+        setLoading(false);
+      });
   }, [movieId]);
 
   if (loading) return <div>Loading details...</div>;
-  if (!movie) return null;
+  if (error) return <div style={{ color: 'red' }}>Error loading details: {error}</div>;
+  if (!movie) return <div>No details found.</div>;
 
   const cast = movie.credits?.cast?.slice(0, 5) || [];
   const trailer = movie.videos?.results?.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube');
@@ -32,7 +40,9 @@ export const MovieDetails: React.FC<MovieDetailsProps> = ({ movieId, onClose, on
       <div className="modal-content">
         <button onClick={onClose} style={{ float: 'right' }}>Close</button>
         <h2>{movie.title} ({movie.release_date?.slice(0, 4)})</h2>
-        <img src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt={movie.title} style={{ float: 'left', marginRight: 16 }} />
+        {movie.poster_path && (
+          <img src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt={movie.title} style={{ float: 'left', marginRight: 16 }} />
+        )}
         <div><b>Type:</b> {movie.genres?.map((g: any) => g.name).join(', ')}</div>
         <div><b>Rating:</b> {movie.vote_average}</div>
         <div><b>Synopsis:</b> {movie.overview}</div>
