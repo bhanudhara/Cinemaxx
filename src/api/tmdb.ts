@@ -35,7 +35,7 @@ const api = axios.create({
   baseURL: BASE_URL,
   headers: {
     Accept: 'application/json',
-    ...(BEARER ? { Authorization: `Bearer ${BEARER}` } : {}),
+    ...(TMDB_BEARER_TOKEN ? { Authorization: `Bearer ${TMDB_BEARER_TOKEN}` } : {}),
   },
   timeout: 10000,
 });
