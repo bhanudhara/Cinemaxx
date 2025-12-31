@@ -5,34 +5,25 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { AuthForm } from './components/AuthForm';
 import { MovieList } from './components/MovieList';
 import { MovieSearch } from './components/MovieSearch';
-import './App.css';
 import { MovieDetails } from './components/MovieDetails';
 import { Favorites } from './components/Favorites';
-import './components/MovieDetails.css';
-
 const App: React.FC = () => {
   const [user, setUser] = useState(() => {
     const u = localStorage.getItem('user');
     return u ? JSON.parse(u) : null;
   });
   const [isLogin, setIsLogin] = useState(true);
-
-  if (!user) {
-    return (
-      <div className="auth-container">
-        <AuthForm onAuth={setUser} isLogin={isLogin} />
-        <button onClick={() => setIsLogin(l => !l)} style={{ marginTop: 8 }}>
-          {isLogin ? 'Need an account? Register' : 'Already have an account? Login'}
-        </button>
-      </div>
-    );
-  }
-
   const [selectedMovie, setSelectedMovie] = useState<any>(null);
   const [favorites, setFavorites] = useState<any[]>(() => {
     const fav = localStorage.getItem('favorites');
     return fav ? JSON.parse(fav) : [];
   });
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+
+  React.useEffect(() => {
+    document.body.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   const handleToggleFavorite = (movie: any) => {
     let updated;
@@ -51,45 +42,51 @@ const App: React.FC = () => {
     localStorage.setItem('favorites', JSON.stringify(updated));
   };
 
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
-  React.useEffect(() => {
-    document.body.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
   return (
+    <div style={{margin: '16px' }}>
     <ErrorBoundary>
-      <div>
-        <h1>Welcome MovieQueue</h1>
-        <button onClick={() => { localStorage.removeItem('user'); setUser(null); }}>
-          Logout
-        </button>
-        <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} style={{ marginLeft: 8 }}>
-          Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
-        </button>
-        <Favorites
-          favorites={favorites}
-          onSelect={setSelectedMovie}
-          onRemove={handleRemoveFavorite}
-        />
-        <MovieSearch onSelect={setSelectedMovie} />
-        <div style={{ margin: '2rem 0' }}>
-          <MovieList category="popular" title="Popular Movies" />
-          <MovieList category="now_playing" title="Now Playing" />
-          <MovieList category="upcoming" title="Upcoming Movies" />
-          <MovieList category="top_rated" title="Top Rated Movies" />
+      {!user ? (
+        <div className="auth-container">
+          <AuthForm onAuth={setUser} isLogin={isLogin} />
+          <button onClick={() => setIsLogin(l => !l)} style={{ marginTop: 8 }}>
+            {isLogin ? 'Need an account? Register' : 'Already have an account? Login'}
+          </button>
         </div>
-        {selectedMovie && (
-          <MovieDetails
-            movieId={selectedMovie.id}
-            onClose={() => setSelectedMovie(null)}
-            onToggleFavorite={handleToggleFavorite}
-            isFavorite={favorites.some((m) => m.id === selectedMovie.id)}
+      ) : (
+        <div>
+          <h1>Welcome, {user.email} ({user.provider})</h1>
+          <button onClick={() => { localStorage.removeItem('user'); setUser(null); }}>
+            Logout
+          </button>
+          <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} style={{ marginLeft: 8 }}>
+            Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
+          </button>
+          <Favorites
+            favorites={favorites}
+            onSelect={setSelectedMovie}
+            onRemove={handleRemoveFavorite}
           />
-        )}
-      </div>
+          <MovieSearch onSelect={setSelectedMovie} />
+          <div style={{ margin: '2rem 0' }}>
+            <MovieList category="popular" title="Popular Movies" />
+            <MovieList category="now_playing" title="Now Playing" />
+            <MovieList category="upcoming" title="Upcoming Movies" />
+            <MovieList category="top_rated" title="Top Rated Movies" />
+          </div>
+          {selectedMovie && (
+            <MovieDetails
+              movieId={selectedMovie.id}
+              onClose={() => setSelectedMovie(null)}
+              onToggleFavorite={handleToggleFavorite}
+              isFavorite={favorites.some((m) => m.id === selectedMovie.id)}
+            />
+          )}
+        </div>
+      )}
     </ErrorBoundary>
+    </div>
   );
 };
+
 
 export default App;

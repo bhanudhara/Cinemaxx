@@ -10,7 +10,7 @@ interface FavoritesProps {
 export const Favorites: React.FC<FavoritesProps> = ({ favorites, onSelect, onRemove }) => (
   <div style={{ margin: '2rem 0' }}>
     <h2>Favorites</h2>
-    <div id="style-16" style={{ display: 'flex', overflowX: 'auto', gap: 16 }}>
+    <div className='hide-scroll' style={{ display: 'flex', overflowX: 'auto', gap: 16 }}>
       {favorites.length === 0 && <div>No favorites yet.</div>}
       {favorites.map(movie => (
         <div key={movie.id} style={{ minWidth: 180, position: 'relative' }}>

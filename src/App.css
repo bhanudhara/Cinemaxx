@@ -3,6 +3,31 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+/* Responsive root container */
+@media (max-width: 900px) {
+  #root {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  #root {
+    padding: 0.5rem;
+    min-width: 0;
+  }
+  .card {
+    padding: 1em;
+  }
+}
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
 }
 
 .logo {
