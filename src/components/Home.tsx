@@ -46,17 +46,70 @@ const Home: React.FC = () => {
     localStorage.setItem('theme', theme)
   }, [theme])
 
+  const [profileOpen, setProfileOpen] = useState(false)
+
   if (!user) return null
+
+  const displayName = typeof user.email === 'string' ? user.email.split('@')[0] : 'User'
+  const initial = displayName.charAt(0).toUpperCase()
+
+  const handleLogout = () => {
+    localStorage.removeItem('user')
+    setUser(null)
+    navigate('/login')
+  }
 
   return (
     <div>
-      <h1>Welcome, {user.email} ({user.provider})</h1>
-      <button onClick={() => { localStorage.removeItem('user'); setUser(null); navigate('/login') }}>
-        Logout
-      </button>
-      <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} style={{ marginLeft: 8 }}>
-        Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
-      </button>
+      <header style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', padding: '1rem 0' }}>
+       
+
+        <div style={{ position: 'relative' }}>
+          <button
+            onClick={() => setProfileOpen(p => !p)}
+            aria-haspopup="true"
+            aria-expanded={profileOpen}
+            style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8 }}
+          >
+            <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#1976d2', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600 }}>
+              {initial}
+            </div>
+          </button>
+
+          {profileOpen && (
+            <div style={{ position: 'absolute', right: 0, top: 48, background: '#fff', border: '1px solid #ddd', borderRadius: 8, minWidth: 200, boxShadow: '0 4px 16px rgba(0,0,0,0.12)', zIndex: 10 }}>
+            
+              {/* <div style={{ padding: 12, borderBottom: '1px solid #eee' }}>
+                <div style={{ fontWeight: 600 }}>{displayName}</div>
+                <div style={{ fontSize: 12, color: '#666' }}>{user.email}</div>
+              </div> */}
+              <div style={{ padding: 8 }}>
+                <button
+                  style={{ width: '100%', padding: 8, border: 'none', background: 'transparent', textAlign: 'left', cursor: 'pointer', color: '#c62828' }}
+                  onClick={() => { setProfileOpen(false); navigate('/profile') }}
+                >
+                  Profile
+                </button>
+
+                <button
+                  style={{ width: '100%', padding: 8, border: 'none', background: 'transparent', textAlign: 'left', cursor: 'pointer', color: '#c62828' }}
+                  onClick={() => { setTheme(theme === 'light' ? 'dark' : 'light'); setProfileOpen(false) }}
+                >
+                  Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
+                </button>
+
+                <button
+                  style={{ width: '100%', padding: 8, border: 'none', background: 'transparent', textAlign: 'left', cursor: 'pointer', color: '#c62828' }}
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </header>
+
       <Favorites
         favorites={favorites}
         onSelect={setSelectedMovie}

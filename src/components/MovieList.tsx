@@ -58,6 +58,25 @@ export const MovieList: React.FC<MovieListProps> = ({ category, title }) => {
     }
   };
 
+  const iconBtnStyle: React.CSSProperties = {
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    zIndex: 2,
+    background: '#fff',
+    border: '2px solid #1976d2',
+    color: '#1976d2',
+    fontSize: 22,
+    cursor: 'pointer',
+    height: 44,
+    width: 44,
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+  };
+
   return (
     <div style={{ margin: '2rem 0', position: 'relative', width: '100%' }}>
       <h2>{title}</h2>
@@ -66,55 +85,11 @@ export const MovieList: React.FC<MovieListProps> = ({ category, title }) => {
       {!loading && !error && movies.length === 0 && <div>No movies found.</div>}
       {showArrows && (
         <>
-          <button
-            aria-label="Scroll left"
-            onClick={scrollLeft}
-            style={{
-              position: 'absolute',
-              left: 0,
-              top: '50%',
-              transform: 'translateY(-50%)',
-              zIndex: 2,
-              background: '#fff',
-              border: '2px solid #1976d2',
-              color: '#1976d2',
-              fontSize: 22,
-              cursor: 'pointer',
-              height: 44,
-              width: 44,
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-            }}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="11" stroke="#1976d2" strokeWidth="2" fill="none"/><polyline points="14 8 10 12 14 16" /></svg>
+          <button aria-label="Scroll left" onClick={scrollLeft} style={{ ...iconBtnStyle, left: 0 }}>
+            <span className="material-icons" style={{ fontSize: 20 }}>chevron_left</span>
           </button>
-          <button
-            aria-label="Scroll right"
-            onClick={scrollRight}
-            style={{
-              position: 'absolute',
-              right: 0,
-              top: '50%',
-              transform: 'translateY(-50%)',
-              zIndex: 2,
-              background: '#fff',
-              border: '2px solid #1976d2',
-              color: '#1976d2',
-              fontSize: 22,
-              cursor: 'pointer',
-              height: 44,
-              width: 44,
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-            }}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="11" stroke="#1976d2" strokeWidth="2" fill="none"/><polyline points="10 8 14 12 10 16" /></svg>
+          <button aria-label="Scroll right" onClick={scrollRight} style={{ ...iconBtnStyle, right: 0 }}>
+            <span className="material-icons" style={{ fontSize: 20 }}>chevron_right</span>
           </button>
         </>
       )}

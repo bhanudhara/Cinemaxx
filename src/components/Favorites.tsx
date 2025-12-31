@@ -34,60 +34,36 @@ export const Favorites: React.FC<FavoritesProps> = ({ favorites, onSelect, onRem
     }
   };
 
+  const iconBtnStyle: React.CSSProperties = {
+    position: 'absolute',
+    left: 0,
+    top: '50%',
+    transform: 'translateY(-50%)',
+    zIndex: 2,
+    background: '#fff',
+    border: '2px solid #1976d2',
+    color: '#1976d2',
+    fontSize: 22,
+    cursor: 'pointer',
+    height: 44,
+    width: 44,
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+  };
+
   return (
     <div style={{ margin: '2rem 0', position: 'relative', width: '100%' }}>
       <h2>Favorites</h2>
       {showArrows && (
         <>
-          <button
-            aria-label="Scroll left"
-            onClick={scrollLeft}
-            style={{
-              position: 'absolute',
-              left: 0,
-              top: '50%',
-              transform: 'translateY(-50%)',
-              zIndex: 2,
-              background: '#fff',
-              border: '2px solid #1976d2',
-              color: '#1976d2',
-              fontSize: 22,
-              cursor: 'pointer',
-              height: 44,
-              width: 44,
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-            }}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="11" stroke="#1976d2" strokeWidth="2" fill="none"/><polyline points="14 8 10 12 14 16" /></svg>
+          <button aria-label="Scroll left" onClick={scrollLeft} style={iconBtnStyle}>
+            <span className="material-icons" style={{ fontSize: 20 }}>chevron_left</span>
           </button>
-          <button
-            aria-label="Scroll right"
-            onClick={scrollRight}
-            style={{
-              position: 'absolute',
-              right: 0,
-              top: '50%',
-              transform: 'translateY(-50%)',
-              zIndex: 2,
-              background: '#fff',
-              border: '2px solid #1976d2',
-              color: '#1976d2',
-              fontSize: 22,
-              cursor: 'pointer',
-              height: 44,
-              width: 44,
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-            }}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="11" stroke="#1976d2" strokeWidth="2" fill="none"/><polyline points="10 8 14 12 10 16" /></svg>
+          <button aria-label="Scroll right" onClick={scrollRight} style={{ ...iconBtnStyle, left: 'auto', right: 0 }}>
+            <span className="material-icons" style={{ fontSize: 20 }}>chevron_right</span>
           </button>
         </>
       )}
@@ -102,9 +78,28 @@ export const Favorites: React.FC<FavoritesProps> = ({ favorites, onSelect, onRem
           <div key={movie.id} style={{ minWidth: 180, position: 'relative' }}>
             <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} style={{ width: '100%', cursor: 'pointer' }} onClick={() => onSelect(movie)} />
             <div>{movie.title}</div>
-            <button style={{ position: 'absolute', top: 4, right: 4, background: '#fff', border: '2px solid #1976d2', borderRadius: '50%', width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#1976d2', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} onClick={() => onRemove(movie)}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1976d2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="11" stroke="#1976d2" strokeWidth="2" fill="none"/><line x1="9" y1="9" x2="15" y2="15" /><line x1="15" y1="9" x2="9" y2="15" /></svg>
-            </button>
+            <span
+              style={{
+                position: 'absolute',
+                top: 4,
+                right: 4,
+                background: '#fff',
+                border: '2px solid rgb(198, 40, 40)',
+                borderRadius: '50%',
+                width: 20,
+                height: 20,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                color: 'rgb(198, 40, 40)',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+              }}
+              onClick={() => onRemove(movie)}
+              aria-label="Remove favorite"
+            >
+              <span className="material-icons" style={{ fontSize: 14 }}>close</span>
+            </span>
           </div>
         ))}
       </div>
