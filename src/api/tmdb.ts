@@ -28,8 +28,8 @@ import axios from 'axios';
 // Use your TMDB Bearer token here
 const TMDB_BEARER_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZmU1NTIyNTNjMzkzYzQ0YTc5MjZhNjRmM2QxMzgzYyIsIm5iZiI6MTc2Njc1ODA1MC41ODgsInN1YiI6IjY5NGU5NmEyNzBjYzc0ZmY5MjA3MmMxMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.TX6Ev81Uxllq0huyNsX8VaQLfqpfCYXn6HN8TJVw9no';
 const BASE_URL = 'https://api.themoviedb.org/3';
-const BEARER = import.meta.env.VITE_TMDB_BEARER_TOKEN as string | undefined;
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY as string | undefined;
+const BEARER = TMDB_BEARER_TOKEN;
+const API_KEY = undefined; // Not used with Bearer token
 
 const api = axios.create({
   baseURL: BASE_URL,
