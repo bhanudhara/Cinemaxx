@@ -39,7 +39,10 @@ export const MovieList: React.FC<MovieListProps> = ({ category, title }) => {
   return (
     <div>
       <h2>{title}</h2>
-      <div style={{ display: 'flex', overflowX: 'auto', gap: 16 }}>
+      <div
+        id="style-16"
+        style={{ display: 'flex', overflowX: 'auto', gap: 16 }}
+      >
         {Array.isArray(movies) && movies.length > 0 ? (
           movies.map(movie => (
             <div key={movie.id} style={{ minWidth: 180 }}>
