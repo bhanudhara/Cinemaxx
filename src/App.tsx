@@ -60,7 +60,7 @@ const App: React.FC = () => {
   return (
     <ErrorBoundary>
       <div>
-        <h1>Welcome, {user.email} ({user.provider})</h1>
+        <h1>Welcome MovieQueue</h1>
         <button onClick={() => { localStorage.removeItem('user'); setUser(null); }}>
           Logout
         </button>
